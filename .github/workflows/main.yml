@@ -13,12 +13,17 @@ jobs:
       - name: Report status
         uses: actions/github-script@v6
         with:
-          script: |
-            github.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: github.event.issue.pull_request.head.sha,
-              state: 'success', // 状態: success | failure | pending
-              context: 'simple-check',
-              description: 'Simple status check passed!'
-            })
+         script: |
+            const pullRequest = github.event.issue.pull_request;
+            if (pullRequest) {
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: pullRequest.head.sha,
+                state: 'success', // 状態: success | failure | pending
+                context: 'simple-check',
+                description: 'Simple status check passed!'
+              });
+            } else {
+              throw new Error("Pull request data is missing");
+            }
