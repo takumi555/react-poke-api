@@ -6,7 +6,7 @@ on:
 
 jobs:
   simple-check:
-    if: github.event.issue.pull_reques
+    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
 
     steps:
