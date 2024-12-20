@@ -3,12 +3,22 @@ name: Simple Status Check
 on:
   issue_comment:
     types: [created]
-
+#aaa
 jobs:
   simple-check:
     if: github.event.issue.pull_request
     runs-on: ubuntu-latest
 
     steps:
-      - name: Mark as successful
-        run: echo "Status check passed!!!!!"
+      - name: Report status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: github.event.issue.pull_request.head.sha,
+              state: 'success', // 状態: success | failure | pending
+              context: 'simple-check',
+              description: 'Simple status check passed!'
+            })
