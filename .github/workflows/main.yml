@@ -1,3 +1,33 @@
+# name: Simple Status Check
+
+# on:
+#   issue_comment:
+#     types: [created]
+
+# jobs:
+#   simple-check:
+#     if: github.event.issue.pull_request
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Report status
+#         uses: actions/github-script@v6
+#         with:
+#           script: |
+#             const pullRequest = github.event.issue.pull_request;
+#             if (pullRequest) {
+#               await github.rest.repos.createCommitStatus({
+#                 owner: context.repo.owner,
+#                 repo: context.repo.repo,
+#                 sha: pullRequest.head.sha,
+#                 state: 'success', // 状態: success | failure | pending
+#                 context: 'simple-check',
+#                 description: 'Simple status check passed!'
+#               });
+#             } else {
+#               throw new Error("Pull request data is missing");
+#             }
+
 name: Simple Status Check
 
 on:
@@ -6,279 +36,10 @@ on:
 
 jobs:
   simple-check:
-    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
-
     steps:
-      - name: Report status
+      - name: Check issue data
         uses: actions/github-script@v6
         with:
           script: |
-            const pullRequest = github.event.issue.pull_request;
-            if (pullRequest) {
-              await github.rest.repos.createCommitStatus({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                sha: pullRequest.head.sha,
-                state: 'success', // 状態: success | failure | pending
-                context: 'simple-check',
-                description: 'Simple status check passed!'
-              });
-            } else {
-              throw new Error("Pull request data is missing");
-            }
-# name: Simple Status Check
-
-# on:
-#   issue_comment:
-#     types: [created]
-
-# jobs:
-#   debug-event:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Dump GitHub event data
-#         run: echo "${{ toJson(github.event) }}"
-
-
-
-# {
-#     "action": "created",
-#     "comment": {
-#       "author_association": "OWNER",
-#       "body": "aaa",
-#       "created_at": "2024-12-20T09:55:20Z",
-#       "html_url": "https://github.com/takumi555/react-poke-api/pull/7#issuecomment-2556658061",
-#       "id": 2556658061,
-#       "issue_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7",
-#       "node_id": "IC_kwDOLnyc286YY4GN",
-#       "performed_via_github_app": null,
-#       "reactions": {
-#         "+1": 0,
-#         "-1": 0,
-#         "confused": 0,
-#         "eyes": 0,
-#         "heart": 0,
-#         "hooray": 0,
-#         "laugh": 0,
-#         "rocket": 0,
-#         "total_count": 0,
-#         "url": "https://api.github.com/repos/takumi555/react-poke-api/issues/comments/2556658061/reactions"
-#       },
-#       "updated_at": "2024-12-20T09:55:20Z",
-#       "url": "https://api.github.com/repos/takumi555/react-poke-api/issues/comments/2556658061",
-#       "user": {
-#         "avatar_url": "https://avatars.githubusercontent.com/u/67146063?v=4",
-#         "events_url": "https://api.github.com/users/takumi555/events{/privacy}",
-#         "followers_url": "https://api.github.com/users/takumi555/followers",
-#         "following_url": "https://api.github.com/users/takumi555/following{/other_user}",
-#         "gists_url": "https://api.github.com/users/takumi555/gists{/gist_id}",
-#         "gravatar_id": "",
-#         "html_url": "https://github.com/takumi555",
-#         "id": 67146063,
-#         "login": "takumi555",
-#         "node_id": "MDQ6VXNlcjY3MTQ2MDYz",
-#         "organizations_url": "https://api.github.com/users/takumi555/orgs",
-#         "received_events_url": "https://api.github.com/users/takumi555/received_events",
-#         "repos_url": "https://api.github.com/users/takumi555/repos",
-#         "site_admin": false,
-#         "starred_url": "https://api.github.com/users/takumi555/starred{/owner}{/repo}",
-#         "subscriptions_url": "https://api.github.com/users/takumi555/subscriptions",
-#         "type": "User",
-#         "url": "https://api.github.com/users/takumi555",
-#         "user_view_type": "public"
-#       }
-#     },
-#     "issue": {
-#       "active_lock_reason": null,
-#       "assignee": null,
-#       "assignees": [],
-#       "author_association": "OWNER",
-#       "body": null,
-#       "closed_at": null,
-#       "comments": 4,
-#       "comments_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7/comments",
-#       "created_at": "2024-12-20T09:48:43Z",
-#       "draft": false,
-#       "events_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7/events",
-#       "html_url": "https://github.com/takumi555/react-poke-api/pull/7",
-#       "id": 2752350625,
-#       "labels": [],
-#       "labels_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7/labels{/name}",
-#       "locked": false,
-#       "milestone": null,
-#       "node_id": "PR_kwDOLnyc286F5JyT",
-#       "number": 7,
-#       "performed_via_github_app": null,
-#       "pull_request": {
-#         "diff_url": "https://github.com/takumi555/react-poke-api/pull/7.diff",
-#         "html_url": "https://github.com/takumi555/react-poke-api/pull/7",
-#         "merged_at": null,
-#         "patch_url": "https://github.com/takumi555/react-poke-api/pull/7.patch",
-#         "url": "https://api.github.com/repos/takumi555/react-poke-api/pulls/7"
-#       },
-#       "reactions": {
-#         "+1": 0,
-#         "-1": 0,
-#         "confused": 0,
-#         "eyes": 0,
-#         "heart": 0,
-#         "hooray": 0,
-#         "laugh": 0,
-#         "rocket": 0,
-#         "total_count": 0,
-#         "url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7/reactions"
-#       },
-#       "repository_url": "https://api.github.com/repos/takumi555/react-poke-api",
-#       "state": "open",
-#       "state_reason": null,
-#       "timeline_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7/timeline",
-#       "title": "test",
-#       "updated_at": "2024-12-20T09:55:20Z",
-#       "url": "https://api.github.com/repos/takumi555/react-poke-api/issues/7",
-#       "user": {
-#         "avatar_url": "https://avatars.githubusercontent.com/u/67146063?v=4",
-#         "events_url": "https://api.github.com/users/takumi555/events{/privacy}",
-#         "followers_url": "https://api.github.com/users/takumi555/followers",
-#         "following_url": "https://api.github.com/users/takumi555/following{/other_user}",
-#         "gists_url": "https://api.github.com/users/takumi555/gists{/gist_id}",
-#         "gravatar_id": "",
-#         "html_url": "https://github.com/takumi555",
-#         "id": 67146063,
-#         "login": "takumi555",
-#         "node_id": "MDQ6VXNlcjY3MTQ2MDYz",
-#         "organizations_url": "https://api.github.com/users/takumi555/orgs",
-#         "received_events_url": "https://api.github.com/users/takumi555/received_events",
-#         "repos_url": "https://api.github.com/users/takumi555/repos",
-#         "site_admin": false,
-#         "starred_url": "https://api.github.com/users/takumi555/starred{/owner}{/repo}",
-#         "subscriptions_url": "https://api.github.com/users/takumi555/subscriptions",
-#         "type": "User",
-#         "url": "https://api.github.com/users/takumi555",
-#         "user_view_type": "public"
-#       }
-#     },
-#     "repository": {
-#       "allow_forking": true,
-#       "archive_url": "https://api.github.com/repos/takumi555/react-poke-api/{archive_format}{/ref}",
-#       "archived": false,
-#       "assignees_url": "https://api.github.com/repos/takumi555/react-poke-api/assignees{/user}",
-#       "blobs_url": "https://api.github.com/repos/takumi555/react-poke-api/git/blobs{/sha}",
-#       "branches_url": "https://api.github.com/repos/takumi555/react-poke-api/branches{/branch}",
-#       "clone_url": "https://github.com/takumi555/react-poke-api.git",
-#       "collaborators_url": "https://api.github.com/repos/takumi555/react-poke-api/collaborators{/collaborator}",
-#       "comments_url": "https://api.github.com/repos/takumi555/react-poke-api/comments{/number}",
-#       "commits_url": "https://api.github.com/repos/takumi555/react-poke-api/commits{/sha}",
-#       "compare_url": "https://api.github.com/repos/takumi555/react-poke-api/compare/{base}...{head}",
-#       "contents_url": "https://api.github.com/repos/takumi555/react-poke-api/contents/{+path}",
-#       "contributors_url": "https://api.github.com/repos/takumi555/react-poke-api/contributors",
-#       "created_at": "2024-03-31T06:32:38Z",
-#       "default_branch": "main",
-#       "deployments_url": "https://api.github.com/repos/takumi555/react-poke-api/deployments",
-#       "description": null,
-#       "disabled": false,
-#       "downloads_url": "https://api.github.com/repos/takumi555/react-poke-api/downloads",
-#       "events_url": "https://api.github.com/repos/takumi555/react-poke-api/events",
-#       "fork": false,
-#       "forks": 0,
-#       "forks_count": 0,
-#       "forks_url": "https://api.github.com/repos/takumi555/react-poke-api/forks",
-#       "full_name": "takumi555/react-poke-api",
-#       "git_commits_url": "https://api.github.com/repos/takumi555/react-poke-api/git/commits{/sha}",
-#       "git_refs_url": "https://api.github.com/repos/takumi555/react-poke-api/git/refs{/sha}",
-#       "git_tags_url": "https://api.github.com/repos/takumi555/react-poke-api/git/tags{/sha}",
-#       "git_url": "git://github.com/takumi555/react-poke-api.git",
-#       "has_discussions": false,
-#       "has_downloads": true,
-#       "has_issues": true,
-#       "has_pages": false,
-#       "has_projects": true,
-#       "has_wiki": true,
-#       "homepage": null,
-#       "hooks_url": "https://api.github.com/repos/takumi555/react-poke-api/hooks",
-#       "html_url": "https://github.com/takumi555/react-poke-api",
-#       "id": 779918555,
-#       "is_template": false,
-#       "issue_comment_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/comments{/number}",
-#       "issue_events_url": "https://api.github.com/repos/takumi555/react-poke-api/issues/events{/number}",
-#       "issues_url": "https://api.github.com/repos/takumi555/react-poke-api/issues{/number}",
-#       "keys_url": "https://api.github.com/repos/takumi555/react-poke-api/keys{/key_id}",
-#       "labels_url": "https://api.github.com/repos/takumi555/react-poke-api/labels{/name}",
-#       "language": "TypeScript",
-#       "languages_url": "https://api.github.com/repos/takumi555/react-poke-api/languages",
-#       "license": null,
-#       "merges_url": "https://api.github.com/repos/takumi555/react-poke-api/merges",
-#       "milestones_url": "https://api.github.com/repos/takumi555/react-poke-api/milestones{/number}",
-#       "mirror_url": null,
-#       "name": "react-poke-api",
-#       "node_id": "R_kgDOLnyc2w",
-#       "notifications_url": "https://api.github.com/repos/takumi555/react-poke-api/notifications{?since,all,participating}",
-#       "open_issues": 3,
-#       "open_issues_count": 3,
-#       "owner": {
-#         "avatar_url": "https://avatars.githubusercontent.com/u/67146063?v=4",
-#         "events_url": "https://api.github.com/users/takumi555/events{/privacy}",
-#         "followers_url": "https://api.github.com/users/takumi555/followers",
-#         "following_url": "https://api.github.com/users/takumi555/following{/other_user}",
-#         "gists_url": "https://api.github.com/users/takumi555/gists{/gist_id}",
-#         "gravatar_id": "",
-#         "html_url": "https://github.com/takumi555",
-#         "id": 67146063,
-#         "login": "takumi555",
-#         "node_id": "MDQ6VXNlcjY3MTQ2MDYz",
-#         "organizations_url": "https://api.github.com/users/takumi555/orgs",
-#         "received_events_url": "https://api.github.com/users/takumi555/received_events",
-#         "repos_url": "https://api.github.com/users/takumi555/repos",
-#         "site_admin": false,
-#         "starred_url": "https://api.github.com/users/takumi555/starred{/owner}{/repo}",
-#         "subscriptions_url": "https://api.github.com/users/takumi555/subscriptions",
-#         "type": "User",
-#         "url": "https://api.github.com/users/takumi555",
-#         "user_view_type": "public"
-#       },
-#       "private": false,
-#       "pulls_url": "https://api.github.com/repos/takumi555/react-poke-api/pulls{/number}",
-#       "pushed_at": "2024-12-20T09:55:17Z",
-#       "releases_url": "https://api.github.com/repos/takumi555/react-poke-api/releases{/id}",
-#       "size": 53,
-#       "ssh_url": "git@github.com:takumi555/react-poke-api.git",
-#       "stargazers_count": 0,
-#       "stargazers_url": "https://api.github.com/repos/takumi555/react-poke-api/stargazers",
-#       "statuses_url": "https://api.github.com/repos/takumi555/react-poke-api/statuses/{sha}",
-#       "subscribers_url": "https://api.github.com/repos/takumi555/react-poke-api/subscribers",
-#       "subscription_url": "https://api.github.com/repos/takumi555/react-poke-api/subscription",
-#       "svn_url": "https://github.com/takumi555/react-poke-api",
-#       "tags_url": "https://api.github.com/repos/takumi555/react-poke-api/tags",
-#       "teams_url": "https://api.github.com/repos/takumi555/react-poke-api/teams",
-#       "topics": [],
-#       "trees_url": "https://api.github.com/repos/takumi555/react-poke-api/git/trees{/sha}",
-#       "updated_at": "2024-12-20T09:53:40Z",
-#       "url": "https://api.github.com/repos/takumi555/react-poke-api",
-#       "visibility": "public",
-#       "watchers": 0,
-#       "watchers_count": 0,
-#       "web_commit_signoff_required": false
-#     },
-#     "sender": {
-#       "avatar_url": "https://avatars.githubusercontent.com/u/67146063?v=4",
-#       "events_url": "https://api.github.com/users/takumi555/events{/privacy}",
-#       "followers_url": "https://api.github.com/users/takumi555/followers",
-#       "following_url": "https://api.github.com/users/takumi555/following{/other_user}",
-#       "gists_url": "https://api.github.com/users/takumi555/gists{/gist_id}",
-#       "gravatar_id": "",
-#       "html_url": "https://github.com/takumi555",
-#       "id": 67146063,
-#       "login": "takumi555",
-#       "node_id": "MDQ6VXNlcjY3MTQ2MDYz",
-#       "organizations_url": "https://api.github.com/users/takumi555/orgs",
-#       "received_events_url": "https://api.github.com/users/takumi555/received_events",
-#       "repos_url": "https://api.github.com/users/takumi555/repos",
-#       "site_admin": false,
-#       "starred_url": "https://api.github.com/users/takumi555/starred{/owner}{/repo}",
-#       "subscriptions_url": "https://api.github.com/users/takumi555/subscriptions",
-#       "type": "User",
-#       "url": "https://api.github.com/users/takumi555",
-#       "user_view_type": "public"
-#     }
-# }
+            console.log("Issue data:", github.event.issue);
