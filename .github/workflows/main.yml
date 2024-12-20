@@ -3,7 +3,7 @@ name: Simple Status Check
 on:
   issue_comment:
     types: [created]
-
+#aaa
 jobs:
   simple-check:
     if: github.event.issue.pull_request
