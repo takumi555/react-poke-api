@@ -36,6 +36,7 @@ on:
 
 jobs:
   simple-check:
+    if: github.event.issue.pull_request
     runs-on: ubuntu-latest
     steps:
       - name: Check issue data
