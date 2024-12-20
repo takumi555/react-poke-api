@@ -1,3 +1,32 @@
+# name: Simple Status Check
+
+# on:
+#   issue_comment:
+#     types: [created]
+
+# jobs:
+#   simple-check:
+#     if: ${{ github.event.issue.pull_request != null }}
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Report status
+#         uses: actions/github-script@v6
+#         with:
+#           script: |
+#             const pullRequest = github.event.issue.pull_request;
+#             if (pullRequest) {
+#               await github.rest.repos.createCommitStatus({
+#                 owner: context.repo.owner,
+#                 repo: context.repo.repo,
+#                 sha: pullRequest.head.sha,
+#                 state: 'success', // 状態: success | failure | pending
+#                 context: 'simple-check',
+#                 description: 'Simple status check passed!'
+#               });
+#             } else {
+#               throw new Error("Pull request data is missing");
+#             }
 name: Simple Status Check
 
 on:
@@ -5,25 +34,9 @@ on:
     types: [created]
 
 jobs:
-  simple-check:
-    if: ${{ github.event.issue.pull_request != null }}
+  debug-event:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Report status
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const pullRequest = github.event.issue.pull_request;
-            if (pullRequest) {
-              await github.rest.repos.createCommitStatus({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                sha: pullRequest.head.sha,
-                state: 'success', // 状態: success | failure | pending
-                context: 'simple-check',
-                description: 'Simple status check passed!'
-              });
-            } else {
-              throw new Error("Pull request data is missing");
-            }
+      - name: Dump GitHub event data
+        run: echo "${{ toJson(github.event) }}"
