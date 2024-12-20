@@ -11,7 +11,7 @@ export default function PokemonList() {
 
   const [pokemonList, setPokemonList] = useState<PokemonType[]>([]);
 
-  // ページ表示時に、ポケモンの一覧を取得する
+  // ページ表示時に、ポケモンの一覧を取得するa
   function getPokemonList() {
     const client: ApiClient = new ApiClient();
     const PokemonUrl: string = endpoints.POKEMON;
