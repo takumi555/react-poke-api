@@ -6,14 +6,14 @@ on:
 
 jobs:
   simple-check:
-    if: github.event.issue.pull_request
+    if: ${{ github.event.issue.pull_request != null }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Report status
         uses: actions/github-script@v6
         with:
-         script: |
+          script: |
             const pullRequest = github.event.issue.pull_request;
             if (pullRequest) {
               await github.rest.repos.createCommitStatus({
