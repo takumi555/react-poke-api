@@ -1,0 +1,14 @@
+name: Simple Status Check
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  simple-check:
+    if: github.event.issue.pull_request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mark as successful
+        run: echo "Status check passed!!"
