@@ -39,8 +39,5 @@ jobs:
     if: github.event.issue.pull_request
     runs-on: ubuntu-latest
     steps:
-      - name: Check issue data
-        uses: actions/github-script@v6
-        with:
-          script: |
-            console.log("Issue data:", github.event);
+      - name: Dump GitHub event data
+        run: echo "${{ toJson(github.event.issue) }}"
